@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Greeting</title>
 </head>
-</html>
+<body>
 <?php
  $srv="0.0.0.0";
  $usn="root";
@@ -63,4 +63,7 @@
   else
   echo "Record <b>NOT</b> $mess!<br>";
  } mysqli_close($conn);
-?>
+?><br><br>
+<center><form action="index.php"><input type="submit" value="🏠Home"></form></center>
+</body>
+</html>
