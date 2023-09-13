@@ -12,13 +12,11 @@ session_start();
 
 <body>
     <?php
-    //  $srv="sql304.epizy.com";
-    //  $usn="epiz_30665473";
-    //  $pass="eepbGbKN8fbGhE";
     $srv = "0.0.0.0";
     $usn = "admin";
     $pass = "admin123";
-    $conn = mysqli_connect($srv, $usn, $pass, "Avinash");
+    include 'config.php';
+    $conn = mysqli_connect($srv, $usn, $pass, $usn . "_Avinash");
     if (!$conn)
         die("Connection lost!");
     mysqli_query($conn, "CREATE TABLE IF NOT EXISTS `user`(`Sr.no` INT(2) NOT NULL AUTO_INCREMENT,`First name` VARCHAR(12) NOT NULL,`Last name` VARCHAR(12) NOT NULL,PRIMARY KEY(`Sr.no`));");
@@ -28,10 +26,12 @@ session_start();
     if (isset($_POST['fsub'])) {
         $firstName = $_POST["fn"];
         $lastName = $_POST["ln"];
-        $file = fopen("/storage/emulated/0/Server/data.txt", "w");
-        $wr = "First name: $firstName\nLast name: $lastName";
-        fwrite($file, $wr);
-        fclose($file);
+        if (file_exists("/storage/emulated/0/Server/") || mkdir("/storage/emulated/0/Server/", recursive: true)) {
+            $file = fopen("/storage/emulated/0/Server/data.txt", "w");
+            $wr = "First name: $firstName\nLast name: $lastName\n";
+            fwrite($file, $wr);
+            fclose($file);
+        }
         $res = mysqli_query($conn, "INSERT INTO `user`(`First name`,`Last name`) VALUES('$firstName','$lastName');");
         pmsg($res, "inserted");
     }
@@ -51,11 +51,12 @@ session_start();
 <tr>
 <th>Sr.no.</th>
 <th>First name</th>
-<th colspan='2'>Last name</th>
+<th>Last name</th>
+<th>Actions</th>
 </tr>";
     while ($row = mysqli_fetch_assoc($res)) {
         echo "<tr>
-<td>" . $num + 1 . "</td>
+<td>" . ($num + 1) . "</td>
 <td>" . $row['First name'] . "</td>
 <td>" . $row['Last name'] . "</td>
 <td><form method='POST' action='submit.php'>

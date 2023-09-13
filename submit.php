@@ -3,9 +3,8 @@
         session_start();
         $_SESSION["post"]=$_POST;
         header("Location: view.php");
-        exit();
     }else {
         header("Location: index.php");
-        exit();
     }
+    exit();
 ?>
