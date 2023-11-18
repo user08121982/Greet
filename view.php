@@ -8,6 +8,12 @@ session_start();
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Greeting</title>
+    <style>
+        td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
 </head>
 
 <body>
